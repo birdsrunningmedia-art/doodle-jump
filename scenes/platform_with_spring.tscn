@@ -1,0 +1,11 @@
+[gd_scene format=3 uid="uid://jg3y3boictae"]
+
+[ext_resource type="PackedScene" uid="uid://c5j7s8fa2nynb" path="res://scenes/spring.tscn" id="1_3spil"]
+[ext_resource type="PackedScene" uid="uid://ce6lmecnlcfjp" path="res://scenes/platform.tscn" id="1_33mm0"]
+
+[node name="PlatformWithSpring" type="Node2D" unique_id=2125309846]
+
+[node name="Spring" parent="." unique_id=1137571935 instance=ExtResource("1_3spil")]
+position = Vector2(-26, -13)
+
+[node name="Platform" parent="." unique_id=1970257744 instance=ExtResource("1_33mm0")]
