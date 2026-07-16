@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://dc7c5fgbqmjpd"]
 
 [ext_resource type="Script" uid="uid://bdnlb448r5ntw" path="res://scripts/main.gd" id="1_o5qli"]
-[ext_resource type="PackedScene" uid="uid://ce6lmecnlcfjp" path="res://scenes/platform.tscn" id="2_0wfyh"]
+[ext_resource type="PackedScene" uid="uid://cxntt1jqax27d" path="res://scenes/platform.tscn" id="2_0wfyh"]
 [ext_resource type="PackedScene" uid="uid://dlc1eonjkfpo1" path="res://scenes/broken_platform.tscn" id="3_jyhfs"]
 [ext_resource type="PackedScene" uid="uid://jg3y3boictae" path="res://scenes/platform_with_spring.tscn" id="4_tbgi4"]
 [ext_resource type="PackedScene" uid="uid://b3c183i0motio" path="res://scenes/player.tscn" id="5_tbgi4"]
@@ -14,7 +14,8 @@ broken_platform_scene = ExtResource("3_jyhfs")
 platform_with_spring_scene = ExtResource("4_tbgi4")
 
 [node name="Player" parent="." unique_id=2071589221 instance=ExtResource("5_tbgi4")]
-position = Vector2(180, 464)
+position = Vector2(204, 415)
+motion_mode = 0
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=635217271 node_paths=PackedStringArray("player")]
 position = Vector2(180, 320)

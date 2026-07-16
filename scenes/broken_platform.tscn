@@ -14,15 +14,15 @@ animations = [{
 }]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_6awhq"]
-size = Vector2(72, 25)
+size = Vector2(72, 14)
 
-[node name="BrokenPlatform" type="RigidBody2D" unique_id=1130524767]
-gravity_scale = 0.0
+[node name="BrokenPlatform" type="StaticBody2D" unique_id=633373110]
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=848493576]
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=2090255368]
+scale = Vector2(1, 0.6)
 sprite_frames = SubResource("SpriteFrames_uy5pm")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1625333188]
-position = Vector2(0, 0.5)
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1256736007]
+position = Vector2(0, 1)
 shape = SubResource("RectangleShape2D_6awhq")
 one_way_collision = true

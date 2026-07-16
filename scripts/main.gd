@@ -53,5 +53,3 @@ func spawn_platform():
 	for platform in platform_container:
 		add_child(platform)
 	
-
-
