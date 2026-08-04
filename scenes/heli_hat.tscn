@@ -1,0 +1,34 @@
+[gd_scene format=3 uid="uid://b8upt7bimbryn"]
+
+[ext_resource type="Texture2D" uid="uid://c0qryp5cett06" path="res://asset/heli-hat.png" id="1_1lw00"]
+[ext_resource type="Script" uid="uid://bsc7e8mjy758t" path="res://scripts/heli_hat.gd" id="1_3ltmt"]
+[ext_resource type="AudioStream" uid="uid://bx5va1wy46pkj" path="res://asset/sounds/sfx/heli_sfx.wav" id="3_sqs0l"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_uy5pm"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_1lw00")
+}],
+"loop": 1,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_6awhq"]
+size = Vector2(40, 40)
+
+[node name="HeliHat" type="Area2D" unique_id=1015027294]
+script = ExtResource("1_3ltmt")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1306308406]
+sprite_frames = SubResource("SpriteFrames_uy5pm")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=432708802]
+shape = SubResource("RectangleShape2D_6awhq")
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="." unique_id=580842633]
+stream = ExtResource("3_sqs0l")
+bus = &"sfx"
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

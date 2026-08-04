@@ -1,0 +1,15 @@
+[gd_scene format=3 uid="uid://qlb34oo3cery"]
+
+[ext_resource type="Script" uid="uid://brld3jo601jp0" path="res://scripts/platform_with_heli_hat.gd" id="1_sa7lt"]
+[ext_resource type="PackedScene" uid="uid://cxntt1jqax27d" path="res://scenes/platform.tscn" id="1_yd3lu"]
+[ext_resource type="PackedScene" uid="uid://b8upt7bimbryn" path="res://scenes/heli_hat.tscn" id="2_sa7lt"]
+
+[node name="PlatformWithHeliHat" type="Node2D" unique_id=499924759]
+script = ExtResource("1_sa7lt")
+
+[node name="HeliHat" parent="." unique_id=1015027294 instance=ExtResource("2_sa7lt")]
+position = Vector2(-16, -29)
+
+[node name="Platform" parent="." unique_id=561047180 instance=ExtResource("1_yd3lu")]
+
+[connection signal="leaves_screen" from="Platform" to="." method="_on_platform_leaves_screen"]

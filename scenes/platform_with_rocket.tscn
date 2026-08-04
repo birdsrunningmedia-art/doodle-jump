@@ -1,0 +1,15 @@
+[gd_scene format=3 uid="uid://bj0yhcueo5mxw"]
+
+[ext_resource type="Script" uid="uid://bipybqrippg6b" path="res://scripts/platform_with_rocket.gd" id="1_2o4ht"]
+[ext_resource type="PackedScene" uid="uid://cxntt1jqax27d" path="res://scenes/platform.tscn" id="1_6ke0w"]
+[ext_resource type="PackedScene" uid="uid://bvw6xeedsrxvk" path="res://scenes/rocket.tscn" id="1_dp7m4"]
+
+[node name="PlatformWithRocket" type="Node2D" unique_id=1825331736]
+script = ExtResource("1_2o4ht")
+
+[node name="Rocket" parent="." unique_id=984570973 instance=ExtResource("1_dp7m4")]
+position = Vector2(-20, -22)
+
+[node name="Platform" parent="." unique_id=561047180 instance=ExtResource("1_6ke0w")]
+
+[connection signal="leaves_screen" from="Platform" to="." method="_on_platform_leaves_screen"]

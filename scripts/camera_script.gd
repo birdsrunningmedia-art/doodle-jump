@@ -17,8 +17,10 @@ func _process(delta):
 
 	if player.global_position.y > global_position.y + screen_size.y / 2:
 		# var z_position = global_position.lerp(player.global_position, 5 * delta)
-		global_position.y = player.global_position.y + screen_size.y
+		global_position.y = player.global_position.y + screen_size.y / 2
 		# global_position.y = z_position.y
+
+		# global_position = global_position.lerp(player.global_position, 5 * delta)
 
 # func _process(delta):
 # 	var should_follow := false

@@ -1,0 +1,48 @@
+[gd_scene format=3 uid="uid://b134170urnb3o"]
+
+[ext_resource type="Texture2D" uid="uid://c06khup1oya71" path="res://asset/enemy.png" id="1_7p1mj"]
+[ext_resource type="Script" uid="uid://by48r7q4ws5nb" path="res://scripts/enemy.gd" id="1_md0e3"]
+[ext_resource type="AudioStream" uid="uid://ba4h7gp0rdtgi" path="res://asset/sounds/sfx/explosion_1.wav" id="3_xwavj"]
+[ext_resource type="AudioStream" uid="uid://f1ep7c0cswq6" path="res://asset/sounds/sfx/explosion_2.wav" id="4_nenq2"]
+[ext_resource type="AudioStream" uid="uid://yur586wd0sgs" path="res://asset/sounds/sfx/explosion_3.wav" id="5_md484"]
+[ext_resource type="AudioStream" uid="uid://be88mvepqdlhg" path="res://asset/sounds/sfx/explosion_4.wav" id="6_ipns3"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_uy5pm"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_7p1mj")
+}],
+"loop": 1,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_6awhq"]
+radius = 50.0
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_uy5pm"]
+streams_count = 4
+stream_0/stream = ExtResource("3_xwavj")
+stream_1/stream = ExtResource("4_nenq2")
+stream_2/stream = ExtResource("5_md484")
+stream_3/stream = ExtResource("6_ipns3")
+
+[node name="Enemy" type="Area2D" unique_id=2011859931 groups=["enemy"]]
+script = ExtResource("1_md0e3")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=969498629]
+sprite_frames = SubResource("SpriteFrames_uy5pm")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=173410152]
+shape = SubResource("CircleShape2D_6awhq")
+
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="." unique_id=1701035649]
+rect = Rect2(-49, -50, 99, 100)
+
+[node name="ExplosionSfx" type="AudioStreamPlayer2D" parent="." unique_id=1360607911]
+stream = SubResource("AudioStreamRandomizer_uy5pm")
+bus = &"sfx"
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="screen_exited" from="VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_screen_exited"]

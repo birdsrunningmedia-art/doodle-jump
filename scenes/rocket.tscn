@@ -1,0 +1,34 @@
+[gd_scene format=3 uid="uid://bvw6xeedsrxvk"]
+
+[ext_resource type="Texture2D" uid="uid://chytsihib26ck" path="res://asset/rocket.png" id="1_3341w"]
+[ext_resource type="Script" uid="uid://dbqnq7k84u7sq" path="res://scripts/rocket.gd" id="1_dkv7l"]
+[ext_resource type="AudioStream" uid="uid://df7l7r6n8i1wh" path="res://asset/sounds/sfx/rocket_lauch_sfx.mp3" id="3_agf72"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_6awhq"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_3341w")
+}],
+"loop": 1,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_cju53"]
+size = Vector2(30, 26)
+
+[node name="Rocket" type="Area2D" unique_id=984570973]
+script = ExtResource("1_dkv7l")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1249162985]
+sprite_frames = SubResource("SpriteFrames_6awhq")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1299402363]
+shape = SubResource("RectangleShape2D_cju53")
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="." unique_id=217065124]
+stream = ExtResource("3_agf72")
+bus = &"sfx"
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

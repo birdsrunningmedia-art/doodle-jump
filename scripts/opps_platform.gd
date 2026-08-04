@@ -1,6 +1,8 @@
 extends StaticBody2D
 
-signal leaves_screen
+
+@onready var puff_sound: AudioStreamPlayer2D = $"AudioStreamPlayer2D"
+
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -13,8 +15,14 @@ func _process(delta: float) -> void:
 
 
 func _on_visible_on_screen_notifier_2d_screen_exited() -> void:
-	leaves_screen.emit()
 	queue_free()
 
+func contact_action():
+	puff_sound.reparent(get_parent())
+	puff_sound.play()
+	puff_sound.finished.connect(puff_sound.queue_free)
+	queue_free()
+
+
 func play_bounce():
-	$AudioStreamPlayer2D.play()
+	pass

@@ -1,0 +1,34 @@
+[gd_scene format=3 uid="uid://bl1pdpvath631"]
+
+[ext_resource type="Texture2D" uid="uid://x0hdrq8wt3o1" path="res://asset/disappear_on_contact.png" id="1_jhwlc"]
+[ext_resource type="Script" uid="uid://cum1n1jg4ges6" path="res://scripts/disappearing_platform.gd" id="1_r6x7o"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_uy5pm"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_jhwlc")
+}],
+"loop": 1,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_6awhq"]
+size = Vector2(72, 18)
+
+[node name="DisappearingPlatform" type="Area2D" unique_id=1578035829 groups=["disappearing_plaforms"]]
+script = ExtResource("1_r6x7o")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=283245779]
+sprite_frames = SubResource("SpriteFrames_uy5pm")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=255656271]
+shape = SubResource("RectangleShape2D_6awhq")
+
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="." unique_id=42992724]
+position = Vector2(0, -16)
+rect = Rect2(-36, -10, 72, 7)
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="screen_exited" from="VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_screen_exited"]

@@ -1,0 +1,34 @@
+[gd_scene format=3 uid="uid://bfus27p3fj8m5"]
+
+[ext_resource type="Texture2D" uid="uid://couflqbnd5utu" path="res://asset/bullet.png" id="1_mkf8s"]
+[ext_resource type="Script" uid="uid://cunwklr8idiif" path="res://scripts/bullet.gd" id="1_y25gk"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_uy5pm"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_mkf8s")
+}],
+"loop": 1,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_6awhq"]
+size = Vector2(12, 6)
+
+[node name="Bullet" type="Area2D" unique_id=1111422103 groups=["bullet"]]
+script = ExtResource("1_y25gk")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1381850887]
+scale = Vector2(2, 2)
+sprite_frames = SubResource("SpriteFrames_uy5pm")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=550617526]
+shape = SubResource("RectangleShape2D_6awhq")
+
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="." unique_id=1447453292]
+rect = Rect2(-6, -3, 12, 6)
+
+[connection signal="area_entered" from="." to="." method="_on_area_entered"]
+[connection signal="screen_exited" from="VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_screen_exited"]

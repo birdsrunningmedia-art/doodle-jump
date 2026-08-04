@@ -1,0 +1,39 @@
+[gd_scene format=3 uid="uid://jiart18oopem"]
+
+[ext_resource type="Script" uid="uid://bqa7bfcbpj834" path="res://scripts/opps_platform.gd" id="1_jrv4q"]
+[ext_resource type="Texture2D" uid="uid://x0hdrq8wt3o1" path="res://asset/disappear_on_contact.png" id="1_urx01"]
+[ext_resource type="AudioStream" uid="uid://cwq4afn8n2qa8" path="res://asset/sounds/sfx/puff.mp3" id="3_kxyt7"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_uy5pm"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_urx01")
+}],
+"loop": 1,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_6awhq"]
+size = Vector2(70, 20)
+
+[node name="OppsPlatform" type="StaticBody2D" unique_id=622089423 groups=["disappearing_platforms"]]
+script = ExtResource("1_jrv4q")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1134088628]
+sprite_frames = SubResource("SpriteFrames_uy5pm")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1333933698]
+shape = SubResource("RectangleShape2D_6awhq")
+one_way_collision = true
+
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="." unique_id=1099822697]
+position = Vector2(0, -20)
+rect = Rect2(-10, -10, 20, 10)
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="." unique_id=1726281049]
+stream = ExtResource("3_kxyt7")
+bus = &"sfx"
+
+[connection signal="screen_exited" from="VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_screen_exited"]

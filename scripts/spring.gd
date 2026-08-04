@@ -1,6 +1,5 @@
-extends StaticBody2D
+extends Area2D
 
-signal leaves_screen
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -12,9 +11,6 @@ func _process(delta: float) -> void:
 	pass
 
 
-func _on_visible_on_screen_notifier_2d_screen_exited() -> void:
-	leaves_screen.emit()
-	queue_free()
-
-func play_bounce():
-	$AudioStreamPlayer2D.play()
+func _on_body_entered(body: Node2D) -> void:
+	if body.is_in_group("player"):
+			body.spring_touched()
