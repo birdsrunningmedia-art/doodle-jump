@@ -34,8 +34,11 @@ var spring_touched_bool = false
 var disappearing_platform_bool = false
 
 func _ready():
-	next_trigger_y = global_position.y - step_size
+	# next_trigger_y = global_position.y - step_size
 	screen_size = get_viewport().size
+	gravity = 0
+	hide()
+	$CollisionShape2D.disabled = true
 
 func _process(_delta):
 	if !death_sequence_bool:
@@ -101,11 +104,8 @@ func _physics_process(delta):
 
 func on_y_step_reached():
 	generate_platform_threshold.emit()
+	print("nani?")
 
-func start(pos):
-	death_sequence_bool = false
-	position = pos
-	velocity.y = jump_velocity
 
 func maintain_velocity(duration: float):
 	keep_velocity = true
@@ -145,5 +145,24 @@ func shoot():
 	bullet.global_rotation = bullet_spawn_location.global_rotation
 
 func death_sequence():
-	die = true
+	death_sequence_bool = true
 	death_sequence_signal.emit()
+
+func start(pos):
+	death_sequence_bool = false
+	$CollisionShape2D.disabled = false
+	prev_big_y_value = 0.0
+	
+	show()
+	position = pos
+	next_trigger_y = global_position.y - step_size
+	velocity.y = jump_velocity
+	gravity = 850.0
+	$CollisionShape2D.disabled = false
+
+
+func stop():
+	velocity.y = 0
+	gravity = 0
+	hide()
+	$CollisionShape2D.disabled = true

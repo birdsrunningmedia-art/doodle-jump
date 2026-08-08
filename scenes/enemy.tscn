@@ -40,7 +40,7 @@ shape = SubResource("CircleShape2D_6awhq")
 [node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="." unique_id=1701035649]
 rect = Rect2(-49, -50, 99, 100)
 
-[node name="ExplosionSfx" type="AudioStreamPlayer2D" parent="." unique_id=1360607911]
+[node name="ExplosionSfx" type="AudioStreamPlayer2D" parent="." unique_id=1360607911 groups=["enemy"]]
 stream = SubResource("AudioStreamRandomizer_uy5pm")
 bus = &"sfx"
 

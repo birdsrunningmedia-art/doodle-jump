@@ -9,10 +9,20 @@ extends Node
 @export var moving_platform_scene: PackedScene
 @export var enemy_scene: PackedScene
 @export var crash_site_scene: PackedScene
+@export var dead_zone_scene: PackedScene
 
 var platform_container: Array[Node] = []
 var screen_size
 
+# Game constants
+const unit = 9
+const jump_value = 16
+
+# Game variables
+var score = 0
+var ghost_platform = false
+var threshold_score = 8000
+var game_active = false
 var new_y
 var false_y
 var prev_false_y
@@ -21,27 +31,53 @@ var min_vertical
 var max_vertical
 const INITIAL_POS = Vector2(180, 620) # In pixels
 var next_pos: Vector2
+var INITIAL_CAMERA_POSITION = Vector2(180, 310)
 
-var score = 0
 
-const unit = 9
-
-const jump_value = 16
-
-var ghost_platform = false
-var threshold_score = 8000
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	screen_size = get_viewport().size
-	spawn_platforms()
-	$Player.start($StartPosition.position)
+	# spawn_platforms()
+	# $Player.start($StartPosition.position)
 	$Music.play()
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
 	pass
 
+func new_game():
+	$GameOverSfx.stop()
+	$Camera2D.global_position = INITIAL_CAMERA_POSITION
+	score = 0
+	spawn_platforms()
+	$Player.start($StartPosition.position)
+
+	# adding the dead_zone
+	var dead_zone = dead_zone_scene.instantiate()
+	dead_zone.global_position = $DeadZoneStartPosition.position
+
+	# Add dead zone area to game.
+	dead_zone.connect("player_dead", player_died)
+	add_child(dead_zone)
+
+func player_died():
+	$GameOverSfx.play()
+	print("game over")
+	platform_container = []
+	prev_y = 620 # In pixels
+	clear_platforms()
+	# $Player.stop() 
+	$Player.call_deferred("stop")
+	ghost_platform = false
+	$HUD.show()
+
+func clear_platforms():
+	for platform in $PlatformContainer.get_children():
+		platform.queue_free()
+	
+
+# Game play functions
 # spawn platform code
 func spawn_platforms():
 	# Anchor platform.
@@ -89,7 +125,7 @@ func spawn_platforms():
 			prev_y = new_y
 	
 	for platforms in platform_container:
-		add_child(platforms)
+		$PlatformContainer.add_child(platforms)
 
 func spawn_single_platform():
 	var randomizer
@@ -109,7 +145,7 @@ func spawn_single_platform():
 		next_pos = Vector2(randi_range(36, 324), new_y)
 		var new_platform = platform_scene.instantiate()
 		new_platform.global_position = next_pos
-		add_child(new_platform)
+		$PlatformContainer.add_child(new_platform)
 		ghost_platform = false
 		
 	elif randomizer == 1:
@@ -124,7 +160,7 @@ func spawn_single_platform():
 			var platform_with_spring = platform_with_spring_scene.instantiate()
 			# Later change the multiplier from 3 to 4 in the y co-ordinate of the platform position.
 			platform_with_spring.global_position = next_pos
-			add_child(platform_with_spring)
+			$PlatformContainer.add_child(platform_with_spring)
 			ghost_platform = false
 		else:
 			var new_platform = platform_scene.instantiate()
@@ -142,7 +178,7 @@ func spawn_single_platform():
 		var broken_platform = broken_platform_scene.instantiate()
 		# Later change the multiplier from 3 to 4 in the y co-ordinate of the platform position.
 		broken_platform.global_position = next_pos
-		add_child(broken_platform)
+		$PlatformContainer.add_child(broken_platform)
 		ghost_platform = false
 
 	# Platform with Heli hat
@@ -157,7 +193,7 @@ func spawn_single_platform():
 			var platform_with_heli_hat = platform_with_heli_hat_scene.instantiate()
 			# Later change the multiplier from 3 to 4 in the y co-ordinate of the platform position.
 			platform_with_heli_hat.global_position = next_pos
-			add_child(platform_with_heli_hat)
+			$PlatformContainer.add_child(platform_with_heli_hat)
 			ghost_platform = false
 		else:
 			var wheel = randi_range(0, 5)
@@ -165,12 +201,12 @@ func spawn_single_platform():
 				var broken_platform = broken_platform_scene.instantiate()
 				# Later change the multiplier from 3 to 4 in the y co-ordinate of the platform position.
 				broken_platform.global_position = next_pos
-				add_child(broken_platform)
+				$PlatformContainer.add_child(broken_platform)
 				ghost_platform = false
 			else:
 				var new_platform = platform_scene.instantiate()
 				new_platform.global_position = next_pos
-				add_child(new_platform)
+				$PlatformContainer.add_child(new_platform)
 				ghost_platform = false
 
 
@@ -186,7 +222,7 @@ func spawn_single_platform():
 			var platform_with_rocket = platform_with_rocket_scene.instantiate()
 			# Later change the multiplier from 3 to 4 in the y co-ordinate of the platform position.
 			platform_with_rocket.global_position = next_pos
-			add_child(platform_with_rocket)
+			$PlatformContainer.add_child(platform_with_rocket)
 			ghost_platform = false
 		else:
 			if score > threshold_score:
@@ -197,7 +233,7 @@ func spawn_single_platform():
 			else:
 				var new_platform = platform_scene.instantiate()
 				new_platform.global_position = next_pos
-				add_child(new_platform)
+				$PlatformContainer.add_child(new_platform)
 				ghost_platform = false
 
 	# ghost_platform platform here
@@ -209,7 +245,7 @@ func spawn_single_platform():
 		var disappearing_platform = disappearing_platform_scene.instantiate()
 		# Later change the multiplier from 3 to 4 in the y co-ordinate of the platform position.
 		disappearing_platform.global_position = next_pos
-		add_child(disappearing_platform)
+		$PlatformContainer.add_child(disappearing_platform)
 		platform_container.append(disappearing_platform)
 	elif randomizer == 6:
 		# Moving Platform
@@ -221,13 +257,13 @@ func spawn_single_platform():
 		var moving_platform = moving_platform_scene.instantiate()
 		# Later change the multiplier from 3 to 4 in the y co-ordinate of the platform position.
 		moving_platform.global_position = next_pos
-		add_child(moving_platform)
+		$PlatformContainer.add_child(moving_platform)
 		ghost_platform = false
 	elif randomizer == 7:
 		var enemy = enemy_scene.instantiate()
 		var pos = Vector2(randi_range(50, 310), randi_range(0, 400))
 		enemy.global_position = pos
-		add_child(enemy)
+		$PlatformContainer.add_child(enemy)
 		return
 	else:
 		return
@@ -257,9 +293,7 @@ func platform_difficulty_setter(game_score) -> int:
 		return 1
 
 
-func game_over():
-	$GameOverSfx.play()
-	print("game over")
-
-func new_game():
-	pass
+func _on_hud_start_button_pressed() -> void:
+	print("Start button pressed")
+	$HUD.hide()
+	new_game()

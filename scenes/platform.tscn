@@ -42,7 +42,7 @@ one_way_collision = true
 [node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="." unique_id=1147435700]
 rect = Rect2(-36, -25, 72, 7)
 
-[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="." unique_id=1473417018]
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="." unique_id=1473417018 groups=["platforms"]]
 stream = SubResource("AudioStreamRandomizer_uy5pm")
 bus = &"sfx"
 

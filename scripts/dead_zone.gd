@@ -1,11 +1,10 @@
 extends Area2D
 
-signal reached
+signal player_dead
 
 var screen_size
 
-
-@export var player: CharacterBody2D
+@onready var player: CharacterBody2D = $"../Player"
 
 @export var allowance = 100 # in pixel
 
@@ -22,5 +21,6 @@ func _process(delta: float) -> void:
 
 func _on_body_entered(body: Node2D) -> void:
 	if body.is_in_group("player"):
+		player_dead.emit()
 		body.death_sequence()
-		reached.emit()
+	queue_free()

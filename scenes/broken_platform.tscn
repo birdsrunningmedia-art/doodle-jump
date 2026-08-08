@@ -34,7 +34,7 @@ one_way_collision = true
 position = Vector2(0, -20)
 rect = Rect2(-35, -10, 71, 9)
 
-[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="." unique_id=1427344703]
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="." unique_id=1427344703 groups=["broken_platforms", "platforms"]]
 stream = ExtResource("3_mp4f6")
 bus = &"sfx"
 
